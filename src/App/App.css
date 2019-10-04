@@ -1,0 +1,43 @@
+.App {
+  text-align: center;
+}
+
+.board{
+ display: flex;
+ flex-direction: row;
+}
+
+.inQueue{
+  width: 33.33%;
+  text-align: center;
+}
+
+.inProgress{
+  width: 33.33%;
+  text-align: center;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
+}
+
+.done{
+  width: 33.33%;
+  text-align: center;
+}
+
+.card{
+  display: inline-block;
+  text-align: left;
+  border: 1px solid black;
+  height: auto;
+  width: 80%;
+  align-self: center;
+}
+
+button{
+  border: none;
+  color: blue;
+}
+
+h3{
+  border-bottom: solid black 1px;
+}
