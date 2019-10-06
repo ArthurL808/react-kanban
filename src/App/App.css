@@ -2,30 +2,31 @@
   text-align: center;
 }
 
-.board{
- display: flex;
- flex-direction: row;
+.board {
+  display: flex;
+  flex-direction: row;
 }
 
-.inQueue{
+.inQueue {
   width: 33.33%;
   text-align: center;
 }
 
-.inProgress{
+.inProgress {
   width: 33.33%;
   text-align: center;
   border-left: solid black 1px;
   border-right: solid black 1px;
 }
 
-.done{
+.done {
   width: 33.33%;
   text-align: center;
 }
 
-.card{
+.card {
   display: inline-block;
+  box-shadow: 2px 2px 4px 2px #eee;
   text-align: left;
   border: 1px solid black;
   height: auto;
@@ -33,11 +34,11 @@
   align-self: center;
 }
 
-button{
+button {
   border: none;
   color: blue;
 }
 
-h3{
+h3 {
   border-bottom: solid black 1px;
 }
