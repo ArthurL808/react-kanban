@@ -19,7 +19,7 @@ class App extends Component {
   return (
     <div className="App">
       <h1>Kanban Board</h1>
-      <Board card={this.props.cards} />
+      <Board cards={this.props.allCards} />
       <AddCard addCard={this.addCard}/>
     </div>
   );
@@ -27,7 +27,7 @@ class App extends Component {
 }
 const mapStateToProps = (state) =>{
   return {
-    cards: state.cards
+    allCards: state.cards
   }
 }
 const mapDispatchToProps = (dispatch) =>{

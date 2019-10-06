@@ -2,20 +2,25 @@ import React, { Component } from "react";
 import InQueue from "../InQueue";
 import InProgress from "../InProgress/InProgress";
 import Done from "../Done";
-import Card from '../../components/Card'
+
 
 
 class Board extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
+  filtercards = (cards,status) =>{
+  return cards.filter((c)=>{
+  return c.status === status
+  })
+  }
+
   render() {
     return (
       <div className="board"> 
         <InQueue/>
         <InProgress/>
-        <Done/>
+        <Done filterCards={this.filtercards(this.props.cards,'done')}/>
       </div>
     );
   }

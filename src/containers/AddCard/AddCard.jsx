@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import {addCard} from '../../actions'
 import {connect} from 'react-redux'
 
+
 export class AddCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       titleInput: "",
+      bodyInput: '',
       priorityInput: 'low',
       created_byInput: "",
-      assigned_toInput: ""
+      assigned_toInput: "",
     };
   }
 
@@ -41,7 +43,7 @@ export class AddCard extends Component {
 
   render() {
     return (
-      <div>
+      <div className='AddCard'>
         <div>
           <input onChange= {this.handleTitleInput} type="text" value={this.state.titleInput} placeholder='Title'/>
         </div>
@@ -62,9 +64,23 @@ export class AddCard extends Component {
         <div>
           <input onChange={this.handleAssigned_toInput} type="text" value={this.state.assigned_toInput} placeholder='Assigned To' />
         </div>
+        <button onClick={()=>(this.props.addCard(this.state))}>Add Card</button>
       </div>
     );
   }
 }
+const mapStateToProps = (state) =>{
+  return {
+    allCards: state.cards
+  }
+}
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    addCard: () =>{
+      return dispatch(addCard())
+    }
+  }
+}
+AddCard = connect(mapStateToProps,mapDispatchToProps)(AddCard)
 
 export default AddCard;
