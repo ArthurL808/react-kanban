@@ -7,7 +7,19 @@ const defaultState = {
     priority:'low',
     status:'done',
     createdBy:'Arthur',
-    assignedTo:'Arthur'}]
+    assignedTo:'Arthur'},{id:2,
+      title:'test',
+      body:'this is a test',
+      priority:'low',
+      status:'InProgress',
+      createdBy:'ED',
+      assignedTo:'Arthur'},{id:3,
+        title:'test',
+        body:'this is a test',
+        priority:'low',
+        status:'InQueue',
+        createdBy:'MEL',
+        assignedTo:'Arthur'}]
 };
 
 const reducer = (state = defaultState, action) => {

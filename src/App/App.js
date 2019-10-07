@@ -10,11 +10,11 @@ class App extends Component {
     super(props)
   }
 
-  addCard = ({title,priority,createdBy,assignedTo}) => {
-    const cards = this.props.cards.concat({title,priority,createdBy,assignedTo})
-
+  addCard = ({title,body,priority,createdBy,assignedTo,status}) => {
+    const cards = this.props.allCards.concat({title,body,priority,createdBy,assignedTo,status})
   this.setState({cards})
   }
+  
   render(){
   return (
     <div className="App">

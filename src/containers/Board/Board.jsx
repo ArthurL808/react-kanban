@@ -18,8 +18,8 @@ class Board extends Component {
   render() {
     return (
       <div className="board"> 
-        <InQueue/>
-        <InProgress/>
+        <InQueue filterCards={this.filtercards(this.props.cards,'InQueue')}/>
+        <InProgress filterCards={this.filtercards(this.props.cards,'InProgress')}/>
         <Done filterCards={this.filtercards(this.props.cards,'done')}/>
       </div>
     );

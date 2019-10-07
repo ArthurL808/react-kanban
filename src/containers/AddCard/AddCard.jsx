@@ -40,6 +40,11 @@ export class AddCard extends Component {
     const { value } = e.target;
     this.setState({ assigned_toInput: value });
   };
+  
+  handleSubmit = () =>{
+    const {titleInput:title, bodyInput:body,priorityInput:priority,created_byInput:createdBy,assigned_toInput:assignedTo} = this.state
+    this.props.addCard({title,body,priority,createdBy,assignedTo,status:'InQueue'})
+  }
 
   render() {
     return (
@@ -64,7 +69,7 @@ export class AddCard extends Component {
         <div>
           <input onChange={this.handleAssigned_toInput} type="text" value={this.state.assigned_toInput} placeholder='Assigned To' />
         </div>
-        <button onClick={()=>(this.props.addCard(this.state))}>Add Card</button>
+        <button onClick={this.handleSubmit}>Add Card</button>
       </div>
     );
   }
