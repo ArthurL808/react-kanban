@@ -9,6 +9,8 @@ const Card = function (props) {
             <p>Assigned by: {props.createdBy} </p>
             <button>Edit</button>
             <button>Delete</button>
+            <button>Next</button>
+            <button>Previous</button>
         </div>
     )
 }

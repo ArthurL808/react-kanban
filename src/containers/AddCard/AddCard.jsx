@@ -13,6 +13,7 @@ export class AddCard extends Component {
       priorityInput: 'low',
       created_byInput: "",
       assigned_toInput: "",
+      status:"InQueue"
     };
   }
 
@@ -42,8 +43,16 @@ export class AddCard extends Component {
   };
   
   handleSubmit = () =>{
-    const {titleInput:title, bodyInput:body,priorityInput:priority,created_byInput:createdBy,assigned_toInput:assignedTo} = this.state
-    this.props.addCard({title,body,priority,createdBy,assignedTo,status:'InQueue'})
+    const {titleInput:title, bodyInput:body,priorityInput:priority,created_byInput:createdBy,assigned_toInput:assignedTo,status:status} = this.state
+    this.props.dispatch(addCard({title,body,priority,createdBy,assignedTo,status}))
+    this.setState({
+      titleInput: "",
+      bodyInput: '',
+      priorityInput: 'low',
+      created_byInput: "",
+      assigned_toInput: "",
+      status:"InQueue"
+    })
   }
 
   render() {
@@ -79,13 +88,7 @@ const mapStateToProps = (state) =>{
     allCards: state.cards
   }
 }
-const mapDispatchToProps = (dispatch) =>{
-  return{
-    addCard: () =>{
-      return dispatch(addCard())
-    }
-  }
-}
-AddCard = connect(mapStateToProps,mapDispatchToProps)(AddCard)
+
+AddCard = connect(mapStateToProps)(AddCard)
 
 export default AddCard;

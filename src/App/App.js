@@ -3,11 +3,16 @@ import "./App.css";
 import Board from "../containers/Board";
 import AddCard from "../containers/AddCard";
 import {connect} from 'react-redux';
-import {loadCards} from '../actions'
+import {loadCardsAsync} from '../actions'
 
 class App extends Component {
   constructor(props){
     super(props)
+    console.log('app props',props)
+  }
+
+  componentDidMount(){
+    this.props.loadCardsAsync()
   }
 
   addCard = ({title,body,priority,createdBy,assignedTo,status}) => {
@@ -27,13 +32,13 @@ class App extends Component {
 }
 const mapStateToProps = (state) =>{
   return {
-    allCards: state.cards
+    allCards: state
   }
 }
 const mapDispatchToProps = (dispatch) =>{
   return{
-    loadCards: () =>{
-      return dispatch(loadCards())
+    loadCardsAsync: () =>{
+      return dispatch(loadCardsAsync())
     }
   }
 }
