@@ -4,25 +4,21 @@ const decorator = require("./database/decorator");
 const cardRoutes = require("./routes/cards");
 
 const app = express();
-const PORT = 8080;
-require("dotenv").config();
+const PORT = process.env.EXPRESS_HOST_PORT;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+const REDIS_HOSTNAME = process.env.REDIS_HOSTNAME;
+
+if (!PORT) { console.log('No Port Found'); }
+if (!SESSION_SECRET) { console.log('No Session Secret Found'); }
+if (!REDIS_HOSTNAME) { console.log('No Redis Hostname Found'); }
+if (!PORT || !SESSION_SECRET || !REDIS_HOSTNAME) { return process.exit(1); }
+// require("dotenv").config();
 
 
-// app.use(methodOverride("_method"));
-// app.use(express.static("./public"));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(decorator);
-
-// app.engine(
-//   ".hbs",
-//   exphbs({
-//     extname: ".hbs",
-//     defaultLayout: "main.hbs"
-//   })
-// );
-// app.set("views", __dirname + "/views");
-// app.set("view engine", ".hbs");
+app.use(decorator);
 
 
 app.use("/", cardRoutes);
