@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(decorator);
 
 
-app.use("/", cardRoutes);
+app.use("/cards", cardRoutes);
 
 app.listen(PORT, () => {
   console.log(`server started on PORT:${PORT}`);

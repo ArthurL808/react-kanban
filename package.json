@@ -19,7 +19,8 @@
     "react-spring": "^8.0.27",
     "redis": "^2.8.0",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sass": "^1.24.4"
   },
   "scripts": {
     "start": "react-scripts start",

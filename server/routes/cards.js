@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-router.get('/cards', (req,res)=>{
-    return req.db.Cards.fetchAll().then(results =>{
-        let allCards = results.toJSON()
-        console.log('this is server all cards',allCards)
-        res.send(allCards)
+router.get('/', (req,res)=>{
+    return req.db.Cards.fetchAll({
+        withRelated: ["assigned_to",'created_by', "status","priority"]
+    }).then(results =>{
+        console.log(results)
+        res.json(results)
+    }).catch(err =>{
+        console.log(err)
     })
 })
 

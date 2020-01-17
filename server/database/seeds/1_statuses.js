@@ -5,9 +5,9 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('statuses').insert([
-        {name: 'Queue',rank:'1'},
-        {name: 'In Progress',rank:'2'},
-        {name: 'Done',rank:'3'}
+        {name: 'Queue',rank: 1},
+        {name: 'In Progress',rank: 2},
+        {name: 'Done',rank: 3}
       ]);
     });
 };
