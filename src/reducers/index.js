@@ -7,7 +7,7 @@ const reducer = (state = [], action) => {
       const cards = state.cards.concat(action.payload);
       return { cards };
     case LOAD_CARD:
-      return action.payload;
+      return {...state, cards: action.payload};
     default:
       return state;
   }

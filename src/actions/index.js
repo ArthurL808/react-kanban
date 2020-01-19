@@ -21,7 +21,6 @@ export const loadCardsAsync = () => async dispatch => {
       return response.json();
     })
     .then(cards => {
-      console.log("actions", cards);
       dispatch({
         type: LOAD_CARD,
         payload: cards

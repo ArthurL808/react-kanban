@@ -25,12 +25,14 @@ class App extends Component {
     <div className="App">
       <h1>Kanban Board</h1>
       <Board cards={this.props.allCards} />
-      <AddCard addCard={this.addCard}/>
+
+      {/* <AddCard addCard={this.addCard}/> */}
     </div>
   );
   }
 }
 const mapStateToProps = (state) =>{
+  console.log(state,"state")
   return {
     allCards: state
   }
