@@ -8,9 +8,8 @@ import {loadCardsAsync} from '../actions'
 class App extends Component {
   constructor(props){
     super(props)
-    console.log('app props',props)
   }
-
+  
   componentDidMount(){
     this.props.loadCardsAsync()
   }
@@ -24,7 +23,8 @@ class App extends Component {
   return (
     <div className="App">
       <h1>Kanban Board</h1>
-      <Board cards={this.props.allCards} />
+      {this.props.allCards.length > 0 && <Board cards={this.props.allCards} />}
+      
 
       {/* <AddCard addCard={this.addCard}/> */}
     </div>
@@ -32,15 +32,14 @@ class App extends Component {
   }
 }
 const mapStateToProps = (state) =>{
-  console.log(state,"state")
   return {
-    allCards: state
+    allCards: state.cards
   }
 }
 const mapDispatchToProps = (dispatch) =>{
   return{
     loadCardsAsync: () =>{
-      return dispatch(loadCardsAsync())
+      dispatch(loadCardsAsync())
     }
   }
 }

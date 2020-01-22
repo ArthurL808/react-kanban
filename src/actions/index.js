@@ -8,15 +8,8 @@ export function addCard(payload) {
   };
 }
 
-export function loadCards(payload) {
-  return {
-    type: LOAD_CARD,
-    payload
-  };
-}
-
 export const loadCardsAsync = () => async dispatch => {
-  await fetch("/cards")
+  fetch("/cards")
     .then(response => {
       return response.json();
     })
