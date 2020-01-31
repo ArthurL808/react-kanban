@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "knex": "^0.19.5",
+    "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
     "pg": "^7.12.1",
     "react": "^16.10.1",
@@ -19,8 +20,7 @@
     "react-spring": "^8.0.27",
     "redis": "^2.8.0",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0",
-    "sass": "^1.24.4"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

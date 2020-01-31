@@ -8,10 +8,10 @@ class Cards extends bookshelf.Model {
     return true;
   }
   assigned_to() {
-    return this.belongsTo("User");
+    return this.belongsTo("User","created_by");
   }
   created_by() {
-    return this.belongsTo("User");
+    return this.belongsTo("User","assigned_to");
   }
 
   status() {

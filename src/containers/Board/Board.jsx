@@ -23,8 +23,8 @@ class Board extends Component {
     return (
       <div className="board"> 
         <InQueue filterCards={this.filtercards(this.props.cards,1)}/>
-        {/* <InProgress filterCards={this.filtercards(this.props.cards,2)}/> */}
-        {/* <Done filterCards={this.filtercards(this.props.cards,3)}/> */}
+        <InProgress filterCards={this.filtercards(this.props.cards,2)}/>
+        <Done filterCards={this.filtercards(this.props.cards,3)}/>
       </div>
     );
   }

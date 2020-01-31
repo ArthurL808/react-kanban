@@ -10,8 +10,7 @@ export class Done extends Component {
             <div className='done'>
                 <h3>Done</h3>
                 {this.props.filterCards.map(c=>{
-                return <Card title={c.title}body={c.body} status={c.status} priority={c.priority}
-                createdBy={c.createdBy}/>
+                return <Card key={c.id} title={c.title} body={c.body} priority={c.priority.name} createdBy={c.created_by.first_name} />
                 })}
             </div>
         )

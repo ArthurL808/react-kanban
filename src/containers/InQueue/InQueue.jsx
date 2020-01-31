@@ -11,9 +11,7 @@ export class InQueue extends Component {
       <div className="inQueue">
         <h3>In Queue</h3>
         {this.props.filterCards.map(c=>{
-          console.log(c)
-                return <Card title={c.title}body={c.body} status={c.status} priority={c.priority}
-                createdBy={c.createdBy}/>
+                return <Card key={c.id} title={c.title} body={c.body} priority={c.priority.name} createdBy={c.created_by.first_name} />
                 })}
       </div>
     );

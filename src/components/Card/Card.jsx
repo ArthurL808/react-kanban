@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = function (props) {
+const Card = function ({...props}) {
     return (
         <div className='card'>
             <h4 className='title'>{props.title}</h4>
