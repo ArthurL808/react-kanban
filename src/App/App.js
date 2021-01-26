@@ -11,6 +11,8 @@ class App extends Component {
     this.state = {
       newCard: false,
     };
+
+    this.newCardHandler = this.newCardHandler.bind(this);
   }
 
   componentDidMount() {
@@ -18,18 +20,11 @@ class App extends Component {
     this.props.loadUsers();
   }
 
-  //wtf is this? where am i adding the cards to? redux?
-  // addCard = ({ title, body, priority, createdBy, assignedTo, status }) => {
-  //   const cards = this.props.allCards.concat({
-  //     title,
-  //     body,
-  //     priority,
-  //     createdBy,
-  //     assignedTo,
-  //     status,
-  //   });
-  //   this.setState({ cards });
-  // };
+  newCardHandler() {
+    this.setState({
+      newCard: !this.state.newCard,
+    });
+  }
 
   render() {
     return (
@@ -37,17 +32,15 @@ class App extends Component {
         <header>
           <h1>Kanban Board</h1>
           {!this.state.newCard ? (
-            <button
-              onClick={() => {
-                this.setState({ newCard: !this.state.newCard });
-              }}
-            >
-              + New Task
-            </button>
+            <button onClick={this.newCardHandler}>+ New Task</button>
           ) : null}
         </header>
         {this.state.newCard ? (
-          <AddCard cards={this.props.allCards} users={this.props.users} />
+          <AddCard
+            cards={this.props.allCards}
+            users={this.props.users}
+            newCardHandler={this.newCardHandler}
+          />
         ) : null}
         {this.props.allCards && <Board cards={this.props.allCards} />}
       </div>

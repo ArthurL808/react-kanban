@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   let card = {
     title: req.body.titleInput,
-    body: "",
+    body: req.body.bodyInput,
     priority_id: req.body.priorityInput,
     status_id: 1,
     created_by: null,
@@ -58,7 +58,10 @@ router.post("/", (req, res) => {
                 })
                 .catch((err) => {
                   console.log(err);
-                  res.json({ status: 500, message: "Could not find related Info." });
+                  res.json({
+                    status: 500,
+                    message: "Could not find related Info.",
+                  });
                 });
             })
             .catch((err) => {

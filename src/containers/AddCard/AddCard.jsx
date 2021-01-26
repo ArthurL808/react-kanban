@@ -9,6 +9,7 @@ export class AddCard extends Component {
     this.state = {
       titleInput: "",
       priorityInput: 1,
+      bodyInput: "",
       created_byInput: { first_name: "", last_name: "" },
       assigned_toInput: { first_name: "", last_name: "" },
     };
@@ -17,6 +18,10 @@ export class AddCard extends Component {
   handleTitleInput = (e) => {
     const { value } = e.target;
     this.setState({ titleInput: value });
+  };
+
+  handleBodyInput = (e) => {
+    this.setState({ bodyInput: e.target.value });
   };
 
   handlePriorityInput = (e) => {
@@ -53,18 +58,31 @@ export class AddCard extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.addCard(this.state);
+    this.props.newCardHandler();
   };
 
   render() {
     return (
       <div className="AddCard">
         <div>
+          Title:
           <input
             onChange={this.handleTitleInput}
             type="text"
             value={this.state.titleInput}
             placeholder="Title"
           />
+        </div>
+        <div>
+          Task Details:
+          <textarea
+            name="bodyInput"
+            id="bodyInput"
+            onChange={this.handleBodyInput}
+            cols="20"
+            placeholder="Task description"
+            rows="10"
+          ></textarea>
         </div>
         <div>
           Priority :
@@ -74,12 +92,10 @@ export class AddCard extends Component {
             <option value={3}>High</option>
           </select>
         </div>
-        <input
-          list="created_by"
-          onChange={this.handleCreated_byInput}
-          placeholder="Created_by"
-        />
-        <datalist id="created_by">
+        <select name="created_by" onChange={this.handleCreated_byInput}>
+          <option value="" selected>
+            Select user
+          </option>
           {this.props.users.map((user) => {
             return (
               <option key={user.id}>
@@ -87,14 +103,16 @@ export class AddCard extends Component {
               </option>
             );
           })}
-        </datalist>
+        </select>
 
-        <input
-          list="assigned_to"
+        <select
+          name="assigned_to"
+          selected
           onChange={this.handleAssigned_toInput}
-          placeholder="Assigned_to"
-        />
-        <datalist id="assigned_to">
+        >
+          <option value="" selected>
+            Select user
+          </option>
           {this.props.users.map((user) => {
             return (
               <option key={user.id}>
@@ -102,7 +120,7 @@ export class AddCard extends Component {
               </option>
             );
           })}
-        </datalist>
+        </select>
 
         <button onClick={this.handleSubmit}>Add Card</button>
       </div>
