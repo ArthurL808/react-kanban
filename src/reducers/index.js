@@ -8,8 +8,8 @@ let initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_CARD:
-      const cards = state.cards.concat(action.payload);
-      return cards;
+      
+      return {...state, cards:[...state.cards,action.payload]};
     case LOAD_CARD:
       return { ...state, cards: action.payload };
     case LOAD_USER:

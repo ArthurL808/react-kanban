@@ -2,8 +2,8 @@ export const ADD_CARD = "ADD_CARD";
 export const LOAD_CARD = "LOAD_CARD";
 export const LOAD_USER = "LOAD_USER";
 
-export const addCard = (payload) => async (dispatch) => {
-  await fetch("/cards", {
+export const addCard = (payload) => (dispatch) => {
+  fetch("/cards", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

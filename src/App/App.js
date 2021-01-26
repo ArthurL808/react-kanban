@@ -3,7 +3,7 @@ import "./App.css";
 import Board from "../containers/Board";
 import AddCard from "../containers/AddCard";
 import { connect } from "react-redux";
-import { loadCardsAsync } from "../actions";
+import { loadCardsAsync, loadUsers } from "../actions";
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.loadCardsAsync();
+    this.props.loadUsers();
   }
 
   //wtf is this? where am i adding the cards to? redux?
@@ -35,16 +36,20 @@ class App extends Component {
       <div className="App">
         <header>
           <h1>Kanban Board</h1>
-          <button
-            onClick={() => {
-              this.setState({ newCard: !this.state.newCard });
-            }}
-          >
-            + New Task
-          </button>
+          {!this.state.newCard ? (
+            <button
+              onClick={() => {
+                this.setState({ newCard: !this.state.newCard });
+              }}
+            >
+              + New Task
+            </button>
+          ) : null}
         </header>
-        {this.state.newCard ? <AddCard /> : null}
-        <Board cards={this.props.allCards} />
+        {this.state.newCard ? (
+          <AddCard cards={this.props.allCards} users={this.props.users} />
+        ) : null}
+        {this.props.allCards && <Board cards={this.props.allCards} />}
       </div>
     );
   }
@@ -52,12 +57,16 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     allCards: state.cards,
+    users: state.users,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     loadCardsAsync: () => {
       dispatch(loadCardsAsync());
+    },
+    loadUsers: () => {
+      dispatch(loadUsers());
     },
   };
 };

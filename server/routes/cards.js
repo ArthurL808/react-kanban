@@ -44,7 +44,22 @@ router.post("/", (req, res) => {
           return req.db.Cards.forge(card)
             .save()
             .then((results) => {
-              res.json(results);
+              req.db.Cards.where({ id: results.id })
+                .fetch({
+                  withRelated: [
+                    "assigned_to",
+                    "created_by",
+                    "status",
+                    "priority",
+                  ],
+                })
+                .then((response) => {
+                  res.json(response);
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.json({ status: 500, message: "Could not find related Info." });
+                });
             })
             .catch((err) => {
               console.log(err);

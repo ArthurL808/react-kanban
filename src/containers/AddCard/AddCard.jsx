@@ -14,10 +14,6 @@ export class AddCard extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.loadUsers();
-  }
-
   handleTitleInput = (e) => {
     const { value } = e.target;
     this.setState({ titleInput: value });
@@ -113,12 +109,6 @@ export class AddCard extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    allCards: state.cards,
-    users: state.users,
-  };
-};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -131,6 +121,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-AddCard = connect(mapStateToProps, mapDispatchToProps)(AddCard);
+AddCard = connect(null, mapDispatchToProps)(AddCard);
 
 export default AddCard;
