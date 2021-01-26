@@ -3,12 +3,12 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   return req.db.Cards.fetchAll({
-    withRelated: ["assigned_to", "created_by", "status", "priority"]
+    withRelated: ["assigned_to", "created_by", "status", "priority"],
   })
-    .then(results => {
+    .then((results) => {
       res.json(results);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.json({ status: 500, message: "Could not find any cards." });
     });
@@ -16,21 +16,41 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   let card = {
-    title: req.body.title,
-    body: req.body.body,
-    priority_id: req.body.priority,
+    title: req.body.titleInput,
+    body: "",
+    priority_id: req.body.priorityInput,
     status_id: 1,
-    created_by: 1,
-    assigned_to: 2
+    created_by: null,
+    assigned_to: null,
   };
-  return req.db.Cards.forge(card)
-    .save()
-    .then(results => {
-      res.json(results);
-    })
-    .catch(err => {
-      console.log(err);
-      res.json({ status: 500, message: "Could not post Card." });
+  req.db.User.where({
+    first_name: req.body.created_byInput.first_name,
+    last_name: req.body.created_byInput.last_name,
+  })
+    .fetch()
+    .then((results) => {
+      let created_byData = results.toJSON();
+      card.created_by = created_byData.id;
+
+      req.db.User.where({
+        first_name: req.body.assigned_toInput.first_name,
+        last_name: req.body.assigned_toInput.last_name,
+      })
+        .fetch()
+        .then((results) => {
+          let assigned_toData = results.toJSON();
+          card.assigned_to = assigned_toData.id;
+
+          return req.db.Cards.forge(card)
+            .save()
+            .then((results) => {
+              res.json(results);
+            })
+            .catch((err) => {
+              console.log(err);
+              res.json({ status: 500, message: "Could not post Card." });
+            });
+        });
     });
 });
 
@@ -41,18 +61,18 @@ router.put("/:id", (req, res) => {
     priority_id: req.body.priority,
     status_id: req.body.status,
     created_by: 1,
-    assigned_to: 2
+    assigned_to: 2,
   };
   return req.db.Cards.forge({ id: req.params.id })
     .save(newCard)
-    .then(results => {
+    .then((results) => {
       res.json(results);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.json({
         status: 500,
-        message: "Unable to edit card, please try again later."
+        message: "Unable to edit card, please try again later.",
       });
     });
 });
@@ -61,13 +81,13 @@ router.delete("/:id", (req, res) => {
   return req.db.Cards.where({ id: req.params.id })
     .destroy()
     .then(() => {
-        res.json({status:200, message:'You have Deleted the card!'})
+      res.json({ status: 200, message: "You have Deleted the card!" });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.json({
         status: 500,
-        message: "Unable to Delete card, please try again later."
+        message: "Unable to Delete card, please try again later.",
       });
     });
 });

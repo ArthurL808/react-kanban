@@ -1,30 +1,34 @@
 import React, { Component } from "react";
-import InQueue from "../InQueue";
-import InProgress from "../InProgress/InProgress";
-import Done from "../Done";
-
-
+import Column from "../Column";
 
 class Board extends Component {
   constructor(props) {
     super(props);
 
-    this.filtercards = this.filtercards.bind(this)
+    this.filtercards = this.filtercards.bind(this);
   }
 
-  filtercards = (cards,status) =>{
-    console.log(cards)
-  return cards.filter((c)=>{
-  return c.status_id === status
-  })
-  }
+  filtercards = (cards, status) => {
+    return cards.filter((c) => {
+      return c.status_id === status;
+    });
+  };
 
   render() {
     return (
-      <div className="board"> 
-        <InQueue filterCards={this.filtercards(this.props.cards,1)}/>
-        <InProgress filterCards={this.filtercards(this.props.cards,2)}/>
-        <Done filterCards={this.filtercards(this.props.cards,3)}/>
+      <div className="board">
+        <Column
+          columnName="inQueue"
+          filterCards={this.filtercards(this.props.cards, 1)}
+        />
+        <Column
+          columnName="inProgress"
+          filterCards={this.filtercards(this.props.cards, 2)}
+        />
+        <Column
+          columnName="done"
+          filterCards={this.filtercards(this.props.cards, 3)}
+        />
       </div>
     );
   }

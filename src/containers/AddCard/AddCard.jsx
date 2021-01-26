@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import {addCard} from '../../actions'
-import {connect} from 'react-redux'
-
+import { addCard, loadUsers } from "../../actions";
+import { connect } from "react-redux";
 
 export class AddCard extends Component {
   constructor(props) {
@@ -9,86 +8,129 @@ export class AddCard extends Component {
 
     this.state = {
       titleInput: "",
-      bodyInput: '',
-      priorityInput: 'low',
-      created_byInput: "",
-      assigned_toInput: "",
-      status:"InQueue"
+      priorityInput: 1,
+      created_byInput: { first_name: "", last_name: "" },
+      assigned_toInput: { first_name: "", last_name: "" },
     };
   }
 
-  handleTitleInput = e => {
+  componentDidMount() {
+    this.props.loadUsers();
+  }
+
+  handleTitleInput = (e) => {
     const { value } = e.target;
     this.setState({ titleInput: value });
   };
 
-  handleBodyInput = e =>{
-    const {value}=e.target
-    this.setState({bodyInput:value})
-  }
-
-  handlePriorityInput = e => {
+  handlePriorityInput = (e) => {
     const { value } = e.target;
     this.setState({ priorityInput: value });
   };
 
-  handleCreated_byInput = e => {
+  handleCreated_byInput = (e) => {
     const { value } = e.target;
-    this.setState({ created_byInput: value });
+    let names = value.split(", ");
+
+    this.setState((prevState) => ({
+      created_byInput: {
+        ...prevState.created_byInput,
+        first_name: names[0],
+        last_name: names[1],
+      },
+    }));
   };
 
-  handleAssigned_toInput = e => {
+  handleAssigned_toInput = (e) => {
     const { value } = e.target;
-    this.setState({ assigned_toInput: value });
+    let names = value.split(", ");
+
+    this.setState((prevState) => ({
+      assigned_toInput: {
+        ...prevState.assigned_toInput,
+        first_name: names[0],
+        last_name: names[1],
+      },
+    }));
   };
-  
-  handleSubmit = () =>{
-    const {titleInput:title, bodyInput:body,priorityInput:priority,created_byInput:createdBy,assigned_toInput:assignedTo,status:status} = this.state
-    this.props.dispatch(addCard({title,body,priority,createdBy,assignedTo,status}))
-    this.setState({
-      titleInput: "",
-      bodyInput: '',
-      priorityInput: 'low',
-      created_byInput: "",
-      assigned_toInput: "",
-      status:"InQueue"
-    })
-  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.addCard(this.state);
+  };
 
   render() {
     return (
-      <div className='AddCard'>
+      <div className="AddCard">
         <div>
-          <input onChange= {this.handleTitleInput} type="text" value={this.state.titleInput} placeholder='Title'/>
-        </div>
-        <div>
-          <input onChange={this.handleBodyInput} type="text" value={this.state.bodyInput}  placeholder="Body"/>
+          <input
+            onChange={this.handleTitleInput}
+            type="text"
+            value={this.state.titleInput}
+            placeholder="Title"
+          />
         </div>
         <div>
           Priority :
           <select onChange={this.handlePriorityInput} name="priorityInput">
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+            <option value={1}>Low</option>
+            <option value={2}>Medium</option>
+            <option value={3}>High</option>
           </select>
         </div>
-        <div>
-          <input onChange={this.handleCreated_byInput} type="text" value={this.state.created_byInput} placeholder='Created By' />
-        </div>
-        <div>
-          <input onChange={this.handleAssigned_toInput} type="text" value={this.state.assigned_toInput} placeholder='Assigned To' />
-        </div>
+        <input
+          list="created_by"
+          onChange={this.handleCreated_byInput}
+          placeholder="Created_by"
+        />
+        <datalist id="created_by">
+          {this.props.users.map((user) => {
+            return (
+              <option key={user.id}>
+                {user.first_name}, {user.last_name}
+              </option>
+            );
+          })}
+        </datalist>
+
+        <input
+          list="assigned_to"
+          onChange={this.handleAssigned_toInput}
+          placeholder="Assigned_to"
+        />
+        <datalist id="assigned_to">
+          {this.props.users.map((user) => {
+            return (
+              <option key={user.id}>
+                {user.first_name}, {user.last_name}
+              </option>
+            );
+          })}
+        </datalist>
+
         <button onClick={this.handleSubmit}>Add Card</button>
       </div>
     );
   }
 }
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   return {
-    allCards: state.cards
-  }
-}
+    allCards: state.cards,
+    users: state.users,
+  };
+};
 
-AddCard = connect(mapStateToProps)(AddCard)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadUsers: () => {
+      dispatch(loadUsers());
+    },
+    addCard: (payload) => {
+      dispatch(addCard(payload));
+    },
+  };
+};
+
+AddCard = connect(mapStateToProps, mapDispatchToProps)(AddCard);
 
 export default AddCard;
