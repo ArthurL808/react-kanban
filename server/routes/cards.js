@@ -72,6 +72,23 @@ router.post("/", (req, res) => {
     });
 });
 
+router.put("/updateStatus", (req, res) => {
+  req.db.Statuses.where({ id: req.body.destination.droppableId })
+    .fetch()
+    .then((status) => {
+      let newStatus = status.toJSON();
+
+      return req.db.Cards.forge({ id: req.body.draggableId })
+        .save({ status_id: newStatus.id }, { patch: true })
+        .then((card) => {
+          res.json(card);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.put("/:id", (req, res) => {
   let newCard = {
     title: req.body.title,

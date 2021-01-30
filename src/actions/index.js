@@ -1,7 +1,10 @@
 export const ADD_CARD = "ADD_CARD";
 export const LOAD_CARD = "LOAD_CARD";
 export const LOAD_USER = "LOAD_USER";
+export const LOAD_STATUSES = "LOAD_STATUSES";
+export const UPDATE_CARD_STATUS = "UPDATE_CARD_STATUS";
 
+//Create
 export const addCard = (payload) => (dispatch) => {
   fetch("/cards", {
     method: "POST",
@@ -18,11 +21,14 @@ export const addCard = (payload) => (dispatch) => {
         type: ADD_CARD,
         payload: data,
       });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
-
-export const loadCardsAsync = () => async (dispatch) => {
-  await fetch("/cards")
+//READ
+export const loadCardsAsync = () => (dispatch) => {
+  fetch("/cards")
     .then((response) => {
       return response.json();
     })
@@ -52,3 +58,42 @@ export const loadUsers = () => (dispatch) => {
       console.log(err);
     });
 };
+
+export const loadStatuses = () => (dispatch) => {
+  fetch("/statuses")
+    .then((response) => {
+      return response.json();
+    })
+    .then((statuses) => {
+      dispatch({
+        type: LOAD_STATUSES,
+        payload: statuses,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+//Update
+export const updateCardStatus = (results) => (dispatch) => {
+  fetch("/cards/updateStatus", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(results),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((updatedCard) => {
+      dispatch({
+        type: UPDATE_CARD_STATUS,
+        payload: updatedCard,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+//Delete

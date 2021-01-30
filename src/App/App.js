@@ -3,7 +3,7 @@ import "./App.css";
 import Board from "../containers/Board";
 import AddCard from "../containers/AddCard";
 import { connect } from "react-redux";
-import { loadCardsAsync, loadUsers } from "../actions";
+import { loadCardsAsync, loadUsers, loadStatuses } from "../actions";
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class App extends Component {
   componentDidMount() {
     this.props.loadCardsAsync();
     this.props.loadUsers();
+    this.props.loadStatuses();
   }
 
   newCardHandler() {
@@ -42,7 +43,9 @@ class App extends Component {
             newCardHandler={this.newCardHandler}
           />
         ) : null}
-        {this.props.allCards && <Board cards={this.props.allCards} />}
+        {this.props.allCards && (
+          <Board statuses={this.props.statuses} cards={this.props.allCards} />
+        )}
       </div>
     );
   }
@@ -51,6 +54,7 @@ const mapStateToProps = (state) => {
   return {
     allCards: state.cards,
     users: state.users,
+    statuses: state.statuses,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -60,6 +64,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadUsers: () => {
       dispatch(loadUsers());
+    },
+    loadStatuses: () => {
+      dispatch(loadStatuses());
     },
   };
 };

@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import Column from "../Column";
+import { updateCardStatus } from "../../actions";
+import { DragDropContext } from "react-beautiful-dnd";
+import { connect } from "react-redux";
 
 class Board extends Component {
   constructor(props) {
     super(props);
 
     this.filtercards = this.filtercards.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  onDragEnd(results) {
+    this.props.updateCardStatus(results);
   }
 
   filtercards = (cards, status) => {
@@ -16,22 +24,30 @@ class Board extends Component {
 
   render() {
     return (
-      <div className="board">
-        <Column
-          columnName="inQueue"
-          filterCards={this.filtercards(this.props.cards, 1)}
-        />
-        <Column
-          columnName="inProgress"
-          filterCards={this.filtercards(this.props.cards, 2)}
-        />
-        <Column
-          columnName="done"
-          filterCards={this.filtercards(this.props.cards, 3)}
-        />
-      </div>
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        {this.props.statuses && (
+          <div className="board">
+            {this.props.statuses.map((status) => (
+              <Column
+                key={status.id}
+                status={status}
+                filterCards={this.filtercards(this.props.cards, status.id)}
+              />
+            ))}
+            ;
+          </div>
+        )}
+      </DragDropContext>
     );
   }
 }
 
-export default Board;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCardStatus: (results) => {
+      dispatch(updateCardStatus(results));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Board);

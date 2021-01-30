@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const decorator = require("./database/decorator");
 const routes = require("./routes/index");
+const router = require("./routes/cards");
 
 const app = express();
 const PORT = process.env.EXPRESS_HOST_PORT;
@@ -28,6 +29,7 @@ app.use(decorator);
 
 app.use("/cards", routes.cards);
 app.use("/users", routes.users);
+app.use("/statuses", routes.statuses);
 // app.use("/auth", routes.auth);
 
 app.listen(PORT, () => {
