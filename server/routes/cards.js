@@ -81,7 +81,13 @@ router.put("/updateStatus", (req, res) => {
       return req.db.Cards.forge({ id: req.body.draggableId })
         .save({ status_id: newStatus.id }, { patch: true })
         .then((card) => {
-          res.json(card);
+          req.db.Cards.where({ id: card.id })
+            .fetch({
+              withRelated: ["assigned_to", "created_by", "status", "priority"],
+            })
+            .then((response) => {
+              res.json(response);
+            });
         });
     })
     .catch((err) => {

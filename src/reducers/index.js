@@ -3,7 +3,8 @@ import {
   LOAD_CARD,
   LOAD_STATUSES,
   LOAD_USER,
-  UPDATE_STATUS,
+  UPDATE_CARD_STATUS,
+  // UPDATE_STATUS,
 } from "../actions";
 
 let initialState = {
@@ -22,6 +23,14 @@ const reducer = (state = initialState, action) => {
       return { ...state, users: action.payload };
     case LOAD_STATUSES:
       return { ...state, statuses: action.payload };
+    case UPDATE_CARD_STATUS:
+      let updatedCardlist = state.cards.map((card) => {
+        if (card.id === action.payload.id) {
+          return action.payload;
+        }
+        return card;
+      });
+      return { ...state, cards: updatedCardlist };
     default:
       return state;
   }
