@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { addCard, loadUsers } from "../../actions";
+import { addCard } from "../../actions";
 import { connect } from "react-redux";
 
 export class AddCard extends Component {
@@ -62,6 +62,7 @@ export class AddCard extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div className="AddCard">
         <div>
@@ -93,9 +94,7 @@ export class AddCard extends Component {
           </select>
         </div>
         <select name="created_by" onChange={this.handleCreated_byInput}>
-          <option value="" selected>
-            Select user
-          </option>
+          <option value="">Select user</option>
           {this.props.users.map((user) => {
             return (
               <option key={user.id}>
@@ -105,14 +104,8 @@ export class AddCard extends Component {
           })}
         </select>
 
-        <select
-          name="assigned_to"
-          selected
-          onChange={this.handleAssigned_toInput}
-        >
-          <option value="" selected>
-            Select user
-          </option>
+        <select name="assigned_to" onChange={this.handleAssigned_toInput}>
+          <option value="">Select user</option>
           {this.props.users.map((user) => {
             return (
               <option key={user.id}>
@@ -130,9 +123,6 @@ export class AddCard extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadUsers: () => {
-      dispatch(loadUsers());
-    },
     addCard: (payload) => {
       dispatch(addCard(payload));
     },

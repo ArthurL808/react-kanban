@@ -27,14 +27,17 @@ class Board extends Component {
       <DragDropContext onDragEnd={this.onDragEnd}>
         {this.props.statuses && (
           <div className="board">
-            {this.props.statuses.map((status) => (
-              <Column
-                key={status.id}
-                status={status}
-                filterCards={this.filtercards(this.props.cards, status.id)}
-              />
-            ))}
-            ;
+            {this.props.statuses
+              .sort((columnA, columnB) => {
+                return columnA.rank - columnB.rank;
+              })
+              .map((status) => (
+                <Column
+                  key={status.id}
+                  status={status}
+                  filterCards={this.filtercards(this.props.cards, status.id)}
+                />
+              ))}
           </div>
         )}
       </DragDropContext>

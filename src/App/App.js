@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import Board from "../containers/Board";
-import AddCard from "../containers/AddCard";
+import AddCard from "../components/AddCard";
+import AddColumn from "../components/AddColumn";
 import { connect } from "react-redux";
 import { loadCardsAsync, loadUsers, loadStatuses } from "../actions";
 
@@ -10,15 +11,23 @@ class App extends Component {
     super(props);
     this.state = {
       newCard: false,
+      newColumn: false,
     };
 
     this.newCardHandler = this.newCardHandler.bind(this);
+    this.newColumnHandler = this.newColumnHandler.bind(this);
   }
 
   componentDidMount() {
     this.props.loadCardsAsync();
     this.props.loadUsers();
     this.props.loadStatuses();
+  }
+
+  newColumnHandler() {
+    this.setState({
+      newColumn: !this.state.newColumn,
+    });
   }
 
   newCardHandler() {
@@ -34,15 +43,20 @@ class App extends Component {
           <h1>Kanban Board</h1>
           {!this.state.newCard ? (
             <button onClick={this.newCardHandler}>+ New Task</button>
-          ) : null}
+          ) : (
+            <AddCard
+              cards={this.props.allCards}
+              users={this.props.users}
+              newCardHandler={this.newCardHandler}
+            />
+          )}
+          {!this.state.newColumn ? (
+            <button onClick={this.newColumnHandler}>+ New Column</button>
+          ) : (
+            <AddColumn newColumnHandler={this.newColumnHandler} />
+          )}
         </header>
-        {this.state.newCard ? (
-          <AddCard
-            cards={this.props.allCards}
-            users={this.props.users}
-            newCardHandler={this.newCardHandler}
-          />
-        ) : null}
+
         {this.props.allCards && (
           <Board statuses={this.props.statuses} cards={this.props.allCards} />
         )}

@@ -1,5 +1,6 @@
 import {
   ADD_CARD,
+  ADD_STATUS,
   LOAD_CARD,
   LOAD_STATUSES,
   LOAD_USER,
@@ -17,6 +18,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_CARD:
       return { ...state, cards: [...state.cards, action.payload] };
+    case ADD_STATUS:
+      return { ...state, statuses: [...state.statuses, action.payload] };
     case LOAD_CARD:
       return { ...state, cards: action.payload };
     case LOAD_USER:

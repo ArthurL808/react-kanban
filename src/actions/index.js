@@ -1,4 +1,5 @@
 export const ADD_CARD = "ADD_CARD";
+export const ADD_STATUS = "ADD_STATUS";
 export const LOAD_CARD = "LOAD_CARD";
 export const LOAD_USER = "LOAD_USER";
 export const LOAD_STATUSES = "LOAD_STATUSES";
@@ -19,6 +20,28 @@ export const addCard = (payload) => (dispatch) => {
     .then((data) => {
       return dispatch({
         type: ADD_CARD,
+        payload: data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const addStatus = (payload) => (dispatch) => {
+  fetch("/statuses", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return dispatch({
+        type: ADD_STATUS,
         payload: data,
       });
     })
