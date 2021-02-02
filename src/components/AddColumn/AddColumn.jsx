@@ -5,7 +5,6 @@ import { addStatus } from "../../actions";
 const AddColumn = ({ ...props }) => {
   const [data, setData] = useState({ name: "", rank: null });
   const disptach = useDispatch();
-
   return (
     <div>
       <input
@@ -13,7 +12,7 @@ const AddColumn = ({ ...props }) => {
         type="text"
         placeholder="Coulmn Name"
         onChange={(e) => {
-            setData({ ...data, [e.target.name]: e.target.value });
+          setData({ ...data, [e.target.name]: e.target.value });
         }}
       />
       <input
@@ -25,7 +24,11 @@ const AddColumn = ({ ...props }) => {
           setData({ ...data, [e.target.name]: e.target.value });
         }}
       />
-      <button onClick={() => disptach(addStatus(data))}>Add Column</button>
+      <button
+        onClick={(() => disptach(addStatus(data)), props.newColumnHandler)}
+      >
+        Add Column
+      </button>
     </div>
   );
 };

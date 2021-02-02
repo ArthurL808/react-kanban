@@ -62,7 +62,6 @@ export class AddCard extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="AddCard">
         <div>
