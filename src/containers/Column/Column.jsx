@@ -14,20 +14,24 @@ export class Column extends Component {
         <Droppable droppableId={this.props.status.id.toString()}>
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {this.props.filterCards.map((card, index) => {
-                return (
-                  <Card
-                    key={card.id}
-                    cardId={card.id}
-                    title={card.title}
-                    body={card.body}
-                    priority={card.priority.name}
-                    createdBy={card.created_by.first_name}
-                    status={card.status}
-                    index={index}
-                  />
-                );
-              })}
+              {this.props.filterCards
+                .sort((cardA, cardB) => {
+                  return cardB.priority_id - cardA.priority_id;
+                })
+                .map((card, index) => {
+                  return (
+                    <Card
+                      key={card.id}
+                      cardId={card.id}
+                      title={card.title}
+                      body={card.body}
+                      priority={card.priority.name}
+                      createdBy={card.created_by.first_name}
+                      status={card.status}
+                      index={index}
+                    />
+                  );
+                })}
               {provided.placeholder}
             </div>
           )}
