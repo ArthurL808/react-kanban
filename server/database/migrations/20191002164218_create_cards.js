@@ -4,6 +4,7 @@ exports.up = function(knex) {
       table.increments()
       table.string('title', 255).notNullable()
       table.string('body', 1024).notNullable()
+      // table.integer('position')
       table.integer('priority_id').notNullable().references('id').inTable('priorities')
       table.integer('status_id').notNullable().references('id').inTable('statuses')
       table.integer('created_by').notNullable().references('id').inTable('users')

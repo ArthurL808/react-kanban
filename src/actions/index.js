@@ -113,6 +113,7 @@ export const updateCardStatus = (results) => (dispatch) => {
       dispatch({
         type: UPDATE_CARD_STATUS,
         payload: updatedCard,
+        position: results,
       });
     })
     .catch((err) => {

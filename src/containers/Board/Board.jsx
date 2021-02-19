@@ -8,19 +8,24 @@ class Board extends Component {
   constructor(props) {
     super(props);
 
-    this.filtercards = this.filtercards.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   onDragEnd(results) {
+    console.log(results);
+    const { destination, source, draggableId } = results;
+
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.draggableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
     this.props.updateCardStatus(results);
   }
-
-  filtercards = (cards, status) => {
-    return cards.filter((c) => {
-      return c.status_id === status;
-    });
-  };
 
   render() {
     return (
@@ -32,11 +37,7 @@ class Board extends Component {
                 return columnA.rank - columnB.rank;
               })
               .map((status) => (
-                <Column
-                  key={status.id}
-                  status={status}
-                  filterCards={this.filtercards(this.props.cards, status.id)}
-                />
+                <Column key={status.id} status={status} />
               ))}
           </div>
         )}
