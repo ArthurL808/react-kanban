@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Column from "../Column";
+import styles from "./Board.module.scss";
 import { updateCardStatus } from "../../actions";
 import { DragDropContext } from "react-beautiful-dnd";
 import { connect } from "react-redux";
@@ -31,7 +32,7 @@ class Board extends Component {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         {this.props.statuses && (
-          <div className="board">
+          <div className={styles.board}>
             {this.props.statuses
               .sort((columnA, columnB) => {
                 return columnA.rank - columnB.rank;

@@ -2,12 +2,12 @@
   text-align: center;
 }
 
-.board {
+/* .board {
   display: flex;
   flex-direction: row;
-}
+} */
 
-.inQueue {
+/* .inQueue {
   width: 33.33%;
   text-align: center;
 }
@@ -22,17 +22,7 @@
 .done {
   width: 33.33%;
   text-align: center;
-}
-
-.card {
-  display: inline-block;
-  box-shadow: 2px 2px 4px 2px #eee;
-  text-align: left;
-  border: 1px solid black;
-  height: auto;
-  width: 80%;
-  align-self: center;
-}
+} */
 
 button {
   border: none;
@@ -41,4 +31,9 @@ button {
 
 h3 {
   border-bottom: solid black 1px;
+}
+header {
+  border: 1px solid black;
+  margin: 15px;
+  background-color: cornsilk;
 }

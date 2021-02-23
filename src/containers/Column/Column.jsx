@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from "../../components/Card";
+import styles from "./Column.module.scss";
 import { Droppable } from "react-beautiful-dnd";
 
 export class Column extends Component {
@@ -9,11 +10,15 @@ export class Column extends Component {
 
   render() {
     return (
-      <div className={this.props.status.name}>
+      <div className={styles.column}>
         <h3>{this.props.status.name}</h3>
         <Droppable droppableId={this.props.status.id.toString()}>
           {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
+            <div
+              className={styles.columnDrop}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {this.props.status.cards.map((card, index) => {
                 return (
                   <Card
@@ -22,6 +27,7 @@ export class Column extends Component {
                     title={card.title}
                     body={card.body}
                     createdBy={card.created_by.first_name}
+                    assignedTo={card.assigned_to.first_name}
                     priority={card.priority.name}
                     status={card.status}
                     index={index}
